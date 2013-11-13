@@ -48,11 +48,12 @@ if (typeof Mozilla == 'undefined') {
 		_sendEvent('hideHighlight');
 	};
 
-	Mozilla.UITour.showInfo = function(target, title, text) {
+	Mozilla.UITour.showInfo = function(target, title, text, icon) {
 		_sendEvent('showInfo', {
 			target: target,
 			title: title,
-			text: text
+			text: text,
+			icon: icon
 		});
 	};
 
