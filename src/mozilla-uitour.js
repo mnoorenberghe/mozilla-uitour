@@ -112,6 +112,12 @@ if (typeof Mozilla == 'undefined') {
 		});
 	};
 
+        Mozilla.UITour.hideMenu = function(name) {
+                _sendEvent('hideMenu', {
+                        name: name
+                });
+        };
+
 	Mozilla.UITour.startUrlbarCapture = function(text, url) {
 		_sendEvent('startUrlbarCapture', {
 			text: text,
