@@ -8,7 +8,7 @@ if (typeof Mozilla == 'undefined') {
 }
 
 ;(function($) {
-    'use strict';
+	'use strict';
 
 	// create namespace
 	if (typeof Mozilla.UITour == 'undefined') {
@@ -23,7 +23,6 @@ if (typeof Mozilla == 'undefined') {
 		}
 	}
 
-
 	function _sendEvent(action, data) {
 		var event = new CustomEvent('mozUITour', {
 			bubbles: true,
@@ -32,8 +31,29 @@ if (typeof Mozilla == 'undefined') {
 				data: data || {}
 			}
 		});
-		console.log("Sending mozUITour event: ", event);
+
 		document.dispatchEvent(event);
+	}
+
+	function _generateCallbackID() {
+		return Math.random().toString(36).replace(/[^a-z]+/g, '');
+	}
+
+	function _waitForCallback(callback) {
+		var id = _generateCallbackID();
+
+		function listener(event) {
+			if (typeof event.detail != "object")
+				return;
+			if (event.detail.callbackID != id)
+				return;
+
+			document.removeEventListener("mozUITourResponse", listener);
+			callback(event.detail.data);
+		}
+		document.addEventListener("mozUITourResponse", listener);
+
+		return id;
 	}
 
 	Mozilla.UITour.DEFAULT_THEME_CYCLE_DELAY = 10 * 1000;
@@ -49,12 +69,24 @@ if (typeof Mozilla == 'undefined') {
 		_sendEvent('hideHighlight');
 	};
 
-	Mozilla.UITour.showInfo = function(target, title, text, icon) {
+	Mozilla.UITour.showInfo = function(target, title, text, icon, buttons) {
+		var buttonData = [];
+		if (Array.isArray(buttons)) {
+			for (var i = 0; i < buttons.length; i++) {
+				buttonData.push({
+					label: buttons[i].label,
+					icon: buttons[i].icon,
+					callbackID: _waitForCallback(buttons[i].callback)
+				});
+			}
+		}
+
 		_sendEvent('showInfo', {
 			target: target,
 			title: title,
 			text: text,
-			icon: icon
+			icon: icon,
+			buttons: buttonData
 		});
 	};
 

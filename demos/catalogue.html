@@ -3,15 +3,57 @@
 <head>
 	<title>mozUITour demo: catalogue of actions</title>
 	<script src="../src/mozilla-uitour.js" type="application/javascript"></script>
+	<script type="application/javascript">
+		window.addEventListener("load", function() {
+			document.getElementById("demo-highlight").addEventListener("mouseover", function() {
+				Mozilla.UITour.showHighlight("bookmarks");
+			});
+			document.getElementById("demo-highlight").addEventListener("mouseout", function() {
+				Mozilla.UITour.hideHighlight();
+			});
+
+			document.getElementById("demo-info-basic").addEventListener("mouseover", function() {
+				Mozilla.UITour.showInfo(
+					"bookmarks",
+					"Bookmarks",
+					"Bookmarks are pretty cool.",
+					"firefox.png");
+			});
+			document.getElementById("demo-info-basic").addEventListener("mouseout", function() {
+				Mozilla.UITour.hideInfo();
+			});
+
+			function callbackLearnMore() {
+				alert("This is more info");
+			}
+			function callbackLater() {
+				alert("Ok, later.")
+			}
+			document.getElementById("demo-info-buttons").addEventListener("mouseover", function() {
+				var buttons = [
+					{label: "Learn more", icon: "firefox.png", callback: callbackLearnMore},
+					{label: "Later", callback: callbackLater}
+				];
+				Mozilla.UITour.showInfo(
+					"bookmarks",
+					"Bookmarks",
+					"Look, bookmarks! Do you want to know more?",
+					"firefox.png",
+					buttons);
+				});
+		}, false);
+	</script>
 	<style type="text/css">
 		body {
 			padding: 2em;
 		}
-		.hover-demos > span {
+		.hover-demos > div {
+			display: inline-block;
 			border: 1px solid black;
 			margin: 2em;
 			padding: 1em;
 			background: #AAA;
+			text-align: center;
 		}
 		.hover-demos span:hover {
 			background: #6A6;
@@ -20,11 +62,16 @@
 </head>
 <body>
 	<div class="hover-demos">
-		<span onmouseover="Mozilla.UITour.showHighlight('bookmarks');" onmouseout="Mozilla.UITour.hideHighlight();">
+		<div id="demo-highlight">
 			Highlight
-		</span>
-		<span onmouseover="Mozilla.UITour.showInfo('bookmarks', 'Title', 'This is a nifty description.', 'firefox.png');" onmouseout="Mozilla.UITour.hideInfo();">
+		</div>
+		<div id="demo-info-basic">
 			Information panel
-		</span>
+		</div>
+		<div id="demo-info-buttons">
+			Information panel<br>
+			With buttons
+		</div>
+	</div>
 </body>
 </html>
