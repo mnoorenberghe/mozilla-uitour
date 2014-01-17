@@ -162,4 +162,10 @@ if (typeof Mozilla == 'undefined') {
 		_sendEvent('endUrlbarCapture');
 	};
 
+	Mozilla.UITour.getSyncConfiguration = function(callback) {
+		_sendEvent('getConfiguration', {
+			callbackID: _waitForCallback(callback),
+			configuration: "sync",
+		});
+	};
 })();
