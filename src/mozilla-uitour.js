@@ -76,6 +76,7 @@ if (typeof Mozilla == 'undefined') {
 				buttonData.push({
 					label: buttons[i].label,
 					icon: buttons[i].icon,
+					style: buttons[i].style,
 					callbackID: _waitForCallback(buttons[i].callback)
 				});
 			}
