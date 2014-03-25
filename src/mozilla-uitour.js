@@ -58,6 +58,9 @@ if (typeof Mozilla == 'undefined') {
 
 	Mozilla.UITour.DEFAULT_THEME_CYCLE_DELAY = 10 * 1000;
 
+	Mozilla.UITour.CONFIGNAME_SYNC = "sync";
+	Mozilla.UITour.CONFIGNAME_AVAILABLETARGETS = "availableTargets";
+
 	Mozilla.UITour.registerPageID = function(pageID) {
 		_sendEvent('registerPageID', {
 			pageID: pageID
@@ -174,10 +177,10 @@ if (typeof Mozilla == 'undefined') {
 		_sendEvent('endUrlbarCapture');
 	};
 
-	Mozilla.UITour.getSyncConfiguration = function(callback) {
+	Mozilla.UITour.getConfiguration = function(configName, callback) {
 		_sendEvent('getConfiguration', {
 			callbackID: _waitForCallback(callback),
-			configuration: "sync",
+			configuration: configName,
 		});
 	};
 })();
