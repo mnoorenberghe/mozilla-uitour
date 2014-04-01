@@ -91,9 +91,11 @@ if (typeof Mozilla == 'undefined') {
 			}
 		}
 
-		var closeButtonCallbackID;
+		var closeButtonCallbackID, targetCallbackID;
 		if (options && options.closeButtonCallback)
 			closeButtonCallbackID = _waitForCallback(options.closeButtonCallback);
+		if (options && options.targetCallback)
+			targetCallbackID = _waitForCallback(options.targetCallback);
 
 		_sendEvent('showInfo', {
 			target: target,
@@ -101,7 +103,8 @@ if (typeof Mozilla == 'undefined') {
 			text: text,
 			icon: icon,
 			buttons: buttonData,
-			closeButtonCallbackID: closeButtonCallbackID
+			closeButtonCallbackID: closeButtonCallbackID,
+			targetCallbackID: targetCallbackID
 		});
 	};
 
